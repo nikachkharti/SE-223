@@ -1,0 +1,106 @@
+﻿--CREATE TABLE Student
+--(
+--    Id INT PRIMARY KEY IDENTITY(1,1),
+--    FirstName NVARCHAR(50) NOT NULL,
+--    LastName NVARCHAR(50) NOT NULL,
+--    RegisterDate DATETIME NOT NULL DEFAULT(GETDATE()),
+--    FullName AS FirstName + LastName,
+--    Attends BIT NOT NULL,
+--    AttendsOnline BIT NOT NULL,
+--    Brilliants INT NULL,
+--    Comment NVARCHAR(MAX) NULL
+--)
+
+--CREATE PROCEDURE sp_addNewStudent
+--@firstName NVARCHAR(50),
+--@lastName NVARCHAR(50),
+--@attends BIT,
+--@attendsOnline BIT,
+--@brilliants INT,
+--@comment NVARCHAR(MAX)
+--AS
+--BEGIN
+--    INSERT INTO Student(FirstName,LastName,Attends,AttendsOnline,Brilliants,Comment)
+--    VALUES(@firstName,@lastName,@attends,@attendsOnline,@brilliants,@comment)
+--END
+
+
+
+CREATE PROCEDURE sp_getAllStudents
+AS
+BEGIN
+    SELECT
+    Id,
+    FirstName,
+    LastName,
+    RegisterDate,
+    FullName,
+    Attends,
+    AttendsOnline,
+    Brilliants,
+    Comment
+FROM Student
+END
+
+
+
+CREATE PROCEDURE sp_getStudentById
+@id INT
+AS
+BEGIN
+    SELECT
+        Id,
+        FirstName,
+        LastName,
+        RegisterDate,
+        FullName,
+        Attends,
+        AttendsOnline,
+        Brilliants,
+        Comment
+    FROM Student
+    WHERE Id = @id
+END
+
+
+
+
+
+CREATE PROCEDURE sp_updateStudent
+@id INT,
+@firstName NVARCHAR(50),
+@lastName NVARCHAR(50),
+@registerDate DATETIME,
+@attends BIT,
+@attendsOnline BIT,
+@brilliants INT,
+@comment NVARCHAR(MAX)
+AS
+BEGIN
+    UPDATE Student
+    SET
+        FirstName = @firstName,
+        LastName = @lastName,
+        RegisterDate = @registerDate,
+        Attends = @attends,
+        AttendsOnline = @attendsOnline,
+        Brilliants = @brilliants,
+        Comment = @comment
+    WHERE Id = @id
+END
+
+CREATE PROCEDURE sp_deleteStudent
+@id INT
+AS
+BEGIN
+    DELETE FROM Student
+    WHERE Id = @id
+END
+
+
+
+
+
+
+
+
