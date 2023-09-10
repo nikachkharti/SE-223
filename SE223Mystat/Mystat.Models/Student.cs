@@ -11,5 +11,8 @@
         public bool AttendsOnline { get; set; }
         public int Brilliants { get; set; }
         public string Comment { get; set; }
+
+        public override bool Equals(object obj) => new StudentEquilityComparer().Equals(obj as Student, this);
+        public override int GetHashCode() => new StudentEquilityComparer().GetHashCode(this);
     }
 }
