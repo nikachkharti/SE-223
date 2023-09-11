@@ -1,7 +1,5 @@
 ﻿using MystatService.Interfaces;
 
-//NIKA CHKARTIHSVILI
-
 namespace MystatService
 {
     public class Student_Service_Should
