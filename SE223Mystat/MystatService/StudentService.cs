@@ -8,7 +8,7 @@ namespace MystatService
 {
     public class StudentService : IStudentService
     {
-        public void AddNewStudent(Student student)
+        public async Task AddNewStudentAsync(Student student)
         {
             const string sqlExpression = "sp_addNewStudent";
 
@@ -27,7 +27,7 @@ namespace MystatService
                     command.Parameters.AddWithValue("comment", student.Comment);
 
                     connection.Open();
-                    command.ExecuteNonQuery();
+                    await command.ExecuteNonQueryAsync();
                 }
                 catch (Exception)
                 {
@@ -40,12 +40,12 @@ namespace MystatService
             }
         }
 
-        public void DeleteStudent(int id)
+        public async Task DeleteStudentAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        public List<Student> GetAllStudents()
+        public async Task<List<Student>> GetAllStudentsAsync()
         {
             List<Student> result = new();
             const string sqlExpression = "sp_getAllStudents";
@@ -58,11 +58,11 @@ namespace MystatService
                     command.CommandType = CommandType.StoredProcedure;
 
                     connection.Open();
-                    SqlDataReader reader = command.ExecuteReader();
+                    SqlDataReader reader = await command.ExecuteReaderAsync();
 
                     if (reader.HasRows)
                     {
-                        while (reader.Read())
+                        while (await reader.ReadAsync())
                         {
                             result.Add(new Student
                             {
@@ -93,12 +93,12 @@ namespace MystatService
             return result;
         }
 
-        public Student GetStudentById(int id)
+        public async Task<Student> GetStudentByIdAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        public void UpdateStudent(Student student)
+        public async Task UpdateStudentAsync(Student student)
         {
             throw new NotImplementedException();
         }

@@ -4,10 +4,10 @@ namespace MystatService.Interfaces
 {
     public interface IStudentService
     {
-        List<Student> GetAllStudents();
-        void AddNewStudent(Student student);
-        Student GetStudentById(int id);
-        void UpdateStudent(Student student);
-        void DeleteStudent(int id);
+        Task<List<Student>> GetAllStudentsAsync();
+        Task AddNewStudentAsync(Student student);
+        Task<Student> GetStudentByIdAsync(int id);
+        Task UpdateStudentAsync(Student student);
+        Task DeleteStudentAsync(int id);
     }
 }

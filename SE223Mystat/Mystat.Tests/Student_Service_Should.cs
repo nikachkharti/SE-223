@@ -11,9 +11,9 @@ namespace MystatService
         }
 
         [Fact]
-        public void Return_All_Students_From_Database()
+        public async void Return_All_Students_From_Database()
         {
-            //var actual = _unitOfWork.Student.GetAllStudents();
+            var actual = await _unitOfWork.Student.GetAllStudentsAsync();
 
             //var expected = new List<Student>()
             //{
@@ -36,7 +36,7 @@ namespace MystatService
         }
 
         [Fact]
-        public void Add_New_Student_In_Database()
+        public async void Add_New_Student_In_Database()
         {
             //Student newStudent = new()
             //{
@@ -48,7 +48,7 @@ namespace MystatService
             //    Comment = string.Empty
             //};
 
-            //_unitOfWork.Student.AddNewStudent(newStudent);
+            //await _unitOfWork.Student.AddNewStudentAsync(newStudent);
         }
 
     }
