@@ -2,31 +2,31 @@
 
 USE SE223
 
---CREATE TABLE Student
---(
---    Id INT PRIMARY KEY IDENTITY(1,1),
---    FirstName NVARCHAR(50) NOT NULL,
---    LastName NVARCHAR(50) NOT NULL,
---    RegisterDate DATETIME NOT NULL DEFAULT(GETDATE()),
---    FullName AS FirstName + LastName,
---    Attends BIT NOT NULL,
---    AttendsOnline BIT NOT NULL,
---    Brilliants INT NULL,
---    Comment NVARCHAR(MAX) NULL
---)
+CREATE TABLE Student
+(
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    FirstName NVARCHAR(50) NOT NULL,
+    LastName NVARCHAR(50) NOT NULL,
+    RegisterDate DATETIME NOT NULL DEFAULT(GETDATE()),
+    FullName AS FirstName + LastName,
+    Attends BIT NOT NULL,
+    AttendsOnline BIT NOT NULL,
+    Brilliants INT NULL,
+    Comment NVARCHAR(MAX) NULL
+)
 
---CREATE PROCEDURE sp_addNewStudent
---@firstName NVARCHAR(50),
---@lastName NVARCHAR(50),
---@attends BIT,
---@attendsOnline BIT,
---@brilliants INT,
---@comment NVARCHAR(MAX)
---AS
---BEGIN
---    INSERT INTO Student(FirstName,LastName,Attends,AttendsOnline,Brilliants,Comment)
---    VALUES(@firstName,@lastName,@attends,@attendsOnline,@brilliants,@comment)
---END
+CREATE PROCEDURE sp_addNewStudent
+@firstName NVARCHAR(50),
+@lastName NVARCHAR(50),
+@attends BIT,
+@attendsOnline BIT,
+@brilliants INT,
+@comment NVARCHAR(MAX)
+AS
+BEGIN
+    INSERT INTO Student(FirstName,LastName,Attends,AttendsOnline,Brilliants,Comment)
+    VALUES(@firstName,@lastName,@attends,@attendsOnline,@brilliants,@comment)
+END
 
 
 

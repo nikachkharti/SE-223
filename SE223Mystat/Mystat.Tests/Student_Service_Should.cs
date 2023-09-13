@@ -38,18 +38,38 @@ namespace MystatService
         [Fact]
         public async void Add_New_Student_In_Database()
         {
-            //Student newStudent = new()
-            //{
-            //    FirstName = "რატი",
-            //    LastName = "მამულაშვილი",
-            //    Attends = true,
-            //    AttendsOnline = true,
-            //    Brilliants = 10,
-            //    Comment = string.Empty
-            //};
+            Student newStudent = new()
+            {
+                FirstName = "რატი",
+                LastName = "მამულაშვილი",
+                Attends = true,
+                AttendsOnline = true,
+                Brilliants = 10,
+                Comment = string.Empty
+            };
 
-            //await _unitOfWork.Student.AddNewStudentAsync(newStudent);
+            await _unitOfWork.Student.AddNewStudentAsync(newStudent);
         }
 
+        [Fact]
+        public async void Get_Single_Student()
+        {
+            var student = await _unitOfWork.Student.GetStudentByIdAsync(1);
+        }
+
+        [Fact]
+        public async void Update_Student()
+        {
+            var studentToUpdate = await _unitOfWork.Student.GetStudentByIdAsync(1);
+            studentToUpdate.FirstName = "გიორგი";
+
+            await _unitOfWork.Student.UpdateStudentAsync(studentToUpdate);
+        }
+
+        [Fact]
+        public async void Delete_Student()
+        {
+            await _unitOfWork.Student.DeleteStudentAsync(2);
+        }
     }
 }
