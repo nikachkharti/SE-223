@@ -40,8 +40,8 @@ namespace MystatService
         {
             Student newStudent = new()
             {
-                FirstName = "რატი",
-                LastName = "მამულაშვილი",
+                FirstName = "ანა",
+                LastName = "ანანიაშვილი",
                 Attends = true,
                 AttendsOnline = true,
                 Brilliants = 10,
@@ -70,6 +70,13 @@ namespace MystatService
         public async void Delete_Student()
         {
             await _unitOfWork.Student.DeleteStudentAsync(2);
+        }
+
+
+        [Fact]
+        public async void Delete_Many_Students()
+        {
+            await _unitOfWork.Student.DeleteManyStudentsAsync(1, 3);
         }
     }
 }

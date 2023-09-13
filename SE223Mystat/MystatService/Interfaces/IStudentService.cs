@@ -9,5 +9,6 @@ namespace MystatService.Interfaces
         Task<Student> GetStudentByIdAsync(int id);
         Task UpdateStudentAsync(Student student);
         Task DeleteStudentAsync(int id);
+        Task DeleteManyStudentsAsync(params int[] ids);
     }
 }

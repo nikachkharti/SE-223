@@ -40,6 +40,36 @@ namespace MystatService
             }
         }
 
+        public async Task DeleteManyStudentsAsync(params int[] ids)
+        {
+            foreach (var idToDelete in ids)
+            {
+                string sqlExpression = $"DELETE FROM Student WHERE Id ={idToDelete}";
+
+
+                using (SqlConnection connection = new(HelperConfig.ConnectionString))
+                {
+                    try
+                    {
+                        SqlCommand command = new(sqlExpression, connection);
+                        command.CommandType = CommandType.Text;
+
+                        await connection.OpenAsync();
+                        await command.ExecuteNonQueryAsync();
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
+                    finally
+                    {
+                        await connection.OpenAsync();
+                    }
+                }
+            }
+
+        }
+
         public async Task DeleteStudentAsync(int id)
         {
             const string sqlExpression = "sp_deleteStudent";
