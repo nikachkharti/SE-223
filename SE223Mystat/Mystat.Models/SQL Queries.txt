@@ -108,3 +108,61 @@ END
 
 
 
+CREATE TABLE Teachers
+(
+	Id INT PRIMARY KEY IDENTITY NOT NULL,
+	FirstName NVARCHAR(50) NOT NULL,
+	LastName NVARCHAR(50) NOT NULL,
+	Pin CHAR(11) NOT NULL,
+	PhoneNumber CHAR(9) NOT NULL,
+	Email VARCHAR(MAX) NOT NULL
+)
+
+
+ALTER TABLE Teachers
+ADD CONSTRAINT validEmailAddress
+CHECK (Email LIKE '%@%' AND Email LIKE '%.%')
+
+
+
+CREATE PROCEDURE [dbo].[sp_addNewTeacher]
+@firstName NVARCHAR(50),
+@lastName NVARCHAR(50),
+@pin CHAR(11),
+@phoneNumber CHAR(9),
+@email VARCHAR(MAX)
+AS
+BEGIN
+    INSERT INTO Teachers(FirstName,LastName,Pin,PhoneNumber,Email)
+	VALUES(@firstName,@lastName,@pin,@phoneNumber,@email)
+END
+
+
+
+CREATE PROCEDURE [dbo].[sp_updateTeacher]
+@firstName NVARCHAR(50),
+@lastName NVARCHAR(50),
+@pin CHAR(11),
+@phoneNumber CHAR(9),
+@email VARCHAR(MAX),
+@id INT
+AS
+BEGIN
+	UPDATE Teachers
+	SET
+		FirstName = @firstName,
+		LastName = @lastName,
+		Pin = @pin,
+		PhoneNumber = @phoneNumber,
+		Email = @email
+	WHERE Id = @id
+END
+
+
+
+
+
+CREATE TABLE [dbo].[Subjects](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Title] [nvarchar](100) NOT NULL
+)
