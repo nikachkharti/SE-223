@@ -1,33 +1,173 @@
-﻿using Mystat.Models;
+﻿using Microsoft.Data.SqlClient;
+using Mystat.Models;
 using MystatService.Interfaces;
+using System.Data;
 
 namespace MystatService
 {
     public class SubjectService : ISubjectService
     {
-        public Task AddNewSubjectAsync(Subject subject)
+        public async Task AddNewSubjectAsync(Subject subject)
         {
-            throw new NotImplementedException();
+            const string sqlExpression = "sp_addNewSubject";
+
+            using (SqlConnection connection = new(HelperConfig.ConnectionString))
+            {
+                try
+                {
+                    SqlCommand command = new(sqlExpression, connection);
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("title", subject.Title);
+
+                    connection.Open();
+                    await command.ExecuteNonQueryAsync();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
         }
 
-        public Task DeleteSubjectAsync(int id)
+        public async Task DeleteSubjectAsync(int id)
         {
-            throw new NotImplementedException();
+            const string sqlExpression = "sp_deleteSubject";
+
+            using (SqlConnection connection = new(HelperConfig.ConnectionString))
+            {
+                try
+                {
+                    SqlCommand command = new(sqlExpression, connection);
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("id", id);
+
+                    connection.Open();
+                    await command.ExecuteNonQueryAsync();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
         }
 
-        public Task<List<Subject>> GetAllSubjectsAsync()
+        public async Task<List<Subject>> GetAllSubjectsAsync()
         {
-            throw new NotImplementedException();
+            List<Subject> result = new();
+            const string sqlExpression = "sp_getAllSubjects";
+
+            using (SqlConnection connection = new(HelperConfig.ConnectionString))
+            {
+                try
+                {
+                    SqlCommand command = new(sqlExpression, connection);
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    connection.Open();
+                    SqlDataReader reader = await command.ExecuteReaderAsync();
+
+                    if (reader.HasRows)
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            result.Add(new Subject
+                            {
+                                Id = reader.GetInt32(0),
+                                Title = !reader.IsDBNull(1) ? reader.GetString(1) : string.Empty,
+                            });
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+
+
+            return result;
         }
 
-        public Task<Subject> GetSubjectByIdAsync(int id)
+        public async Task<Subject> GetSubjectByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            Subject result = new();
+            const string sqlExpression = "sp_getSubjectById";
+
+            using (SqlConnection connection = new(HelperConfig.ConnectionString))
+            {
+                try
+                {
+                    SqlCommand command = new(sqlExpression, connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("id", id);
+
+                    connection.Open();
+                    SqlDataReader reader = await command.ExecuteReaderAsync();
+
+                    if (reader.HasRows)
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            result.Id = reader.GetInt32(0);
+                            result.Title = !reader.IsDBNull(1) ? reader.GetString(1) : string.Empty;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+
+                return result;
+            }
+
         }
 
-        public Task UpdateSubjectAsync(Subject subject)
+        public async Task UpdateSubjectAsync(Subject subject)
         {
-            throw new NotImplementedException();
+            const string sqlExpression = "sp_updateSubject";
+
+            using (SqlConnection connection = new(HelperConfig.ConnectionString))
+            {
+                try
+                {
+                    SqlCommand command = new(sqlExpression, connection);
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("title", subject.Title);
+                    command.Parameters.AddWithValue("id", subject.Id);
+
+                    connection.Open();
+                    await command.ExecuteNonQueryAsync();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
         }
+
     }
 }
