@@ -106,8 +106,6 @@ END
 
 
 
-
-
 CREATE TABLE Teachers
 (
 	Id INT PRIMARY KEY IDENTITY NOT NULL,
@@ -159,10 +157,185 @@ BEGIN
 END
 
 
+CREATE PROCEDURE sp_deleteTeacher
+@id INT
+AS
+BEGIN
+	DELETE
+	FROM Teachers
+	WHERE Id=@id;
+END
+
+
+CREATE PROCEDURE sp_getTeacherById
+@id INT
+AS
+BEGIN
+SELECT [Id]
+      ,[FirstName]
+      ,[LastName]
+      ,[Pin]
+      ,[PhoneNumber]
+      ,[Email]
+  FROM [SE223].[dbo].[Teachers]
+  WHERE Id = @id
+END
+
+
+CREATE PROCEDURE sp_getAllTeachers
+AS
+BEGIN
+SELECT [Id]
+      ,[FirstName]
+      ,[LastName]
+      ,[Pin]
+      ,[PhoneNumber]
+      ,[Email]
+  FROM [SE223].[dbo].[Teachers]
+END
 
 
 
-CREATE TABLE [dbo].[Subjects](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
+CREATE TABLE Subjects(
+	[Id] INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
 	[Title] [nvarchar](100) NOT NULL
 )
+
+
+
+
+
+
+
+CREATE PROCEDURE sp_getAllSubjects
+AS
+BEGIN
+	SELECT
+		Id,
+		Title
+	FROM Subjects
+END
+
+
+CREATE PROCEDURE sp_getSubjectById
+@id INT
+AS
+BEGIN
+	SELECT
+		Id,
+		Title
+	FROM Subjects
+	WHERE Id = @id
+END
+
+
+CREATE PROCEDURE sp_addNewSubject
+@title NVARCHAR(100)
+AS
+BEGIN
+	INSERT INTO Subjects(Title)
+	VALUES(@title)
+END
+
+
+CREATE PROCEDURE sp_deleteSubject
+@id INT
+AS
+BEGIN
+	DELETE
+	FROM Subjects
+	WHERE Id = @id
+END
+
+CREATE PROCEDURE sp_updateSubject
+@title NVARCHAR(100),
+@id INT
+AS
+BEGIN
+	UPDATE Subjects
+	SET Title = @title
+	WHERE Id = @id
+END
+
+
+
+
+
+
+
+
+CREATE TABLE Groups
+(
+    Name VARCHAR(100) NOT NULL,
+	SubjectId INT FOREIGN KEY REFERENCES Subjects(Id),
+	TeacherId INT FOREIGN KEY REFERENCES Teachers(Id),
+	StudentId INT FOREIGN KEY REFERENCES Student(Id),
+)
+
+
+CREATE PROCEDURE sp_addGroup
+@name VARCHAR(100),
+@subjectId INT,
+@teacherId INT,
+@studentId INT
+AS
+BEGIN
+	INSERT INTO Groups(Name,SubjectId,TeacherId,StudentId)
+	VALUES(@name,@subjectId,@teacherId,@studentId)
+END
+
+
+
+CREATE PROCEDURE sp_updateSubjectForGroup
+@name VARCHAR(100),
+@subjectId INT
+AS
+BEGIN
+	UPDATE Groups
+	SET SubjectId =@subjectId
+	WHERE Name = @name
+END
+
+
+
+CREATE PROCEDURE sp_updateTeacherForGroup
+@name VARCHAR(100),
+@teacherId INT
+AS
+BEGIN
+	UPDATE Groups
+	SET TeacherId =@teacherId
+	WHERE Name = @name
+END
+
+
+
+CREATE PROCEDURE sp_updateStudentForGroup
+@existingStudentId INT,
+@studentId INT
+AS
+BEGIN
+    UPDATE Groups
+    SET StudentId = @studentId
+    WHERE StudentId = @existingStudentId
+END
+
+
+
+CREATE PROCEDURE sp_deleteStudentForGroup
+@studentId INT
+AS
+BEGIN
+    DELETE FROM Groups
+    WHERE StudentId = @studentId
+END
+
+
+
+CREATE PROCEDURE sp_deleteGroup
+@name VARCHAR(100)
+AS
+BEGIN
+    DELETE FROM Groups
+    WHERE Name = @name
+END
