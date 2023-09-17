@@ -1,4 +1,4 @@
-﻿namespace MystatService
+﻿namespace Mystat.Abstraction
 {
     public static class HelperConfig
     {
