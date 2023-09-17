@@ -286,48 +286,52 @@ END
 
 
 
-CREATE PROCEDURE sp_updateSubjectForGroup
-@name VARCHAR(100),
+CREATE PROCEDURE [dbo].[sp_updateSubjectForGroup]
+@groupName VARCHAR(100),
+@existingSubjectId INT,
 @subjectId INT
 AS
 BEGIN
 	UPDATE Groups
 	SET SubjectId =@subjectId
-	WHERE Name = @name
+	WHERE SubjectId = @existingSubjectId AND Name = @groupName
 END
 
 
 
-CREATE PROCEDURE sp_updateTeacherForGroup
-@name VARCHAR(100),
-@teacherId INT
+CREATE PROCEDURE [dbo].[sp_updateTeacherForGroup]
+@groupName VARCHAR(100),
+@teacherId INT,
+@existingTeacherId INT
 AS
 BEGIN
 	UPDATE Groups
 	SET TeacherId =@teacherId
-	WHERE Name = @name
+	WHERE TeacherId = @existingTeacherId  AND [Name] = @groupName
 END
 
 
 
-CREATE PROCEDURE sp_updateStudentForGroup
+CREATE PROCEDURE [dbo].[sp_updateStudentForGroup]
 @existingStudentId INT,
-@studentId INT
+@studentId INT,
+@groupName VARCHAR(100)
 AS
 BEGIN
     UPDATE Groups
     SET StudentId = @studentId
-    WHERE StudentId = @existingStudentId
+    WHERE StudentId = @existingStudentId AND [Name]=@groupName
 END
 
 
 
-CREATE PROCEDURE sp_deleteStudentForGroup
-@studentId INT
+CREATE PROCEDURE [dbo].[sp_deleteStudentForGroup]
+@studentId INT,
+@groupName VARCHAR(100)
 AS
 BEGIN
     DELETE FROM Groups
-    WHERE StudentId = @studentId
+    WHERE StudentId = @studentId AND [Name] = @groupName
 END
 
 
