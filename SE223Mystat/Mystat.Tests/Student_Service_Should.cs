@@ -40,8 +40,8 @@ namespace MystatService
         {
             Student newStudent = new()
             {
-                FirstName = "ანა",
-                LastName = "ანანიაშვილი",
+                FirstName = "გიორგი",
+                LastName = "მათეშვილი",
                 Attends = true,
                 AttendsOnline = true,
                 Brilliants = 10,

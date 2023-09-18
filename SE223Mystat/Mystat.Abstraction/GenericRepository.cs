@@ -232,15 +232,67 @@ namespace Mystat.Abstraction
             return result;
         }
 
-
-        public Task POSTAsyncProcedure(string procedure, params object[] parameters)
+        public async Task POSTAsyncProcedure(string procedure, params object[] parameters)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(procedure))
+                throw new ArgumentException($"'{nameof(procedure)}' cannot be null or whitespace.", nameof(procedure));
+
+            string sqlExpression = procedure;
+            using (SqlConnection connection = new(HelperConfig.ConnectionString))
+            {
+                try
+                {
+                    SqlCommand command = new(sqlExpression, connection);
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    if (parameters.Length != 0)
+                    {
+                        for (int i = 0; i < parameters.Length; i++)
+                        {
+                            string parameterName = $"param{i}";
+                            command.Parameters.AddWithValue(parameterName, parameters[i]);
+                        }
+                    }
+
+                    connection.Open();
+                    await command.ExecuteNonQueryAsync();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
         }
 
-        public Task POSTAsyncQuery(string query)
+        public async Task POSTAsyncQuery(string query)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(query))
+                throw new ArgumentException($"'{nameof(query)}' cannot be null or whitespace.", nameof(query));
+
+            string sqlExpression = query;
+            using (SqlConnection connection = new(HelperConfig.ConnectionString))
+            {
+                try
+                {
+                    SqlCommand command = new(sqlExpression, connection);
+                    command.CommandType = CommandType.Text;
+
+                    connection.Open();
+                    await command.ExecuteNonQueryAsync();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
         }
     }
 }
