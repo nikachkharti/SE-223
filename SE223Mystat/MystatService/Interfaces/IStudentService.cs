@@ -1,4 +1,5 @@
-﻿using Mystat.Models;
+﻿using Mystat.Abstraction.Interfaces;
+using Mystat.Models;
 
 namespace MystatService.Interfaces
 {

@@ -16,16 +16,16 @@ CREATE TABLE Student
 )
 
 CREATE PROCEDURE sp_addNewStudent
-@firstName NVARCHAR(50),
-@lastName NVARCHAR(50),
-@attends BIT,
-@attendsOnline BIT,
-@brilliants INT,
-@comment NVARCHAR(MAX)
+@param0 NVARCHAR(50),
+@param1 NVARCHAR(50),
+@param2 BIT,
+@param3 BIT,
+@param4 INT,
+@param5 NVARCHAR(MAX)
 AS
 BEGIN
     INSERT INTO Student(FirstName,LastName,Attends,AttendsOnline,Brilliants,Comment)
-    VALUES(@firstName,@lastName,@attends,@attendsOnline,@brilliants,@comment)
+    VALUES(@param0,@param1,@param2,@param3,@param4,@param5)
 END
 
 
@@ -49,7 +49,7 @@ END
 
 
 CREATE PROCEDURE sp_getStudentById
-@id INT
+@param0 INT
 AS
 BEGIN
     SELECT
@@ -63,7 +63,7 @@ BEGIN
         Brilliants,
         Comment
     FROM Student
-    WHERE Id = @id
+    WHERE Id = @param0
 END
 
 
@@ -71,34 +71,34 @@ END
 
 
 CREATE PROCEDURE sp_updateStudent
-@id INT,
-@firstName NVARCHAR(50),
-@lastName NVARCHAR(50),
-@registerDate DATETIME,
-@attends BIT,
-@attendsOnline BIT,
-@brilliants INT,
-@comment NVARCHAR(MAX)
+@param0 INT,
+@param1 NVARCHAR(50),
+@param2 NVARCHAR(50),
+@param3 DATETIME,
+@param4 BIT,
+@param5 BIT,
+@param6 INT,
+@param7 NVARCHAR(MAX)
 AS
 BEGIN
     UPDATE Student
     SET
-        FirstName = @firstName,
-        LastName = @lastName,
-        RegisterDate = @registerDate,
-        Attends = @attends,
-        AttendsOnline = @attendsOnline,
-        Brilliants = @brilliants,
-        Comment = @comment
-    WHERE Id = @id
+        FirstName = @param1,
+        LastName = @param2,
+        RegisterDate = @param3,
+        Attends = @param4,
+        AttendsOnline = @param5,
+        Brilliants = @param6,
+        Comment = @param7
+    WHERE Id = @param0
 END
 
 CREATE PROCEDURE sp_deleteStudent
-@id INT
+@param0 INT
 AS
 BEGIN
     DELETE FROM Student
-    WHERE Id = @id
+    WHERE Id = @param0
 END
 
 
@@ -124,51 +124,51 @@ CHECK (Email LIKE '%@%' AND Email LIKE '%.%')
 
 
 CREATE PROCEDURE [dbo].[sp_addNewTeacher]
-@firstName NVARCHAR(50),
-@lastName NVARCHAR(50),
-@pin CHAR(11),
-@phoneNumber CHAR(9),
-@email VARCHAR(MAX)
+@param0 NVARCHAR(50),
+@param1 NVARCHAR(50),
+@param2 CHAR(11),
+@param3 CHAR(9),
+@param4 VARCHAR(MAX)
 AS
 BEGIN
     INSERT INTO Teachers(FirstName,LastName,Pin,PhoneNumber,Email)
-	VALUES(@firstName,@lastName,@pin,@phoneNumber,@email)
+	VALUES(@param0,@param1,@param2,@param3,@param4)
 END
 
 
 
 CREATE PROCEDURE [dbo].[sp_updateTeacher]
-@firstName NVARCHAR(50),
-@lastName NVARCHAR(50),
-@pin CHAR(11),
-@phoneNumber CHAR(9),
-@email VARCHAR(MAX),
-@id INT
+@param0 NVARCHAR(50),
+@param1 NVARCHAR(50),
+@param2 CHAR(11),
+@param3 CHAR(9),
+@param4 VARCHAR(MAX),
+@param5 INT
 AS
 BEGIN
 	UPDATE Teachers
 	SET
-		FirstName = @firstName,
-		LastName = @lastName,
-		Pin = @pin,
-		PhoneNumber = @phoneNumber,
-		Email = @email
-	WHERE Id = @id
+		FirstName = @param0,
+		LastName = @param1,
+		Pin = @param2,
+		PhoneNumber = @param3,
+		Email = @param4
+	WHERE Id = @param5
 END
 
 
 CREATE PROCEDURE sp_deleteTeacher
-@id INT
+@param0 INT
 AS
 BEGIN
 	DELETE
 	FROM Teachers
-	WHERE Id=@id;
+	WHERE Id=@param0;
 END
 
 
 CREATE PROCEDURE sp_getTeacherById
-@id INT
+@param0 INT
 AS
 BEGIN
 SELECT [Id]
@@ -178,7 +178,7 @@ SELECT [Id]
       ,[PhoneNumber]
       ,[Email]
   FROM [SE223].[dbo].[Teachers]
-  WHERE Id = @id
+  WHERE Id = @param0
 END
 
 
@@ -218,43 +218,43 @@ END
 
 
 CREATE PROCEDURE sp_getSubjectById
-@id INT
+@param0 INT
 AS
 BEGIN
 	SELECT
 		Id,
 		Title
 	FROM Subjects
-	WHERE Id = @id
+	WHERE Id = @param0
 END
 
 
 CREATE PROCEDURE sp_addNewSubject
-@title NVARCHAR(100)
+@param0 NVARCHAR(100)
 AS
 BEGIN
 	INSERT INTO Subjects(Title)
-	VALUES(@title)
+	VALUES(@param0)
 END
 
 
 CREATE PROCEDURE sp_deleteSubject
-@id INT
+@param0 INT
 AS
 BEGIN
 	DELETE
 	FROM Subjects
-	WHERE Id = @id
+	WHERE Id = @param0
 END
 
 CREATE PROCEDURE sp_updateSubject
-@title NVARCHAR(100),
-@id INT
+@param0 NVARCHAR(100),
+@param1 INT
 AS
 BEGIN
 	UPDATE Subjects
-	SET Title = @title
-	WHERE Id = @id
+	SET Title = @param0
+	WHERE Id = @param1
 END
 
 
@@ -274,72 +274,72 @@ CREATE TABLE Groups
 
 
 CREATE PROCEDURE sp_addGroup
-@name VARCHAR(100),
-@subjectId INT,
-@teacherId INT,
-@studentId INT
+@param0 VARCHAR(100),
+@param1 INT,
+@param2 INT,
+@param3 INT
 AS
 BEGIN
 	INSERT INTO Groups(Name,SubjectId,TeacherId,StudentId)
-	VALUES(@name,@subjectId,@teacherId,@studentId)
+	VALUES(@param0,@param1,@param2,@param3)
 END
 
 
 
 CREATE PROCEDURE [dbo].[sp_updateSubjectForGroup]
-@groupName VARCHAR(100),
-@existingSubjectId INT,
-@subjectId INT
+@param0 VARCHAR(100),
+@param1 INT,
+@param2 INT
 AS
 BEGIN
 	UPDATE Groups
-	SET SubjectId =@subjectId
-	WHERE SubjectId = @existingSubjectId AND Name = @groupName
+	SET SubjectId =@param2
+	WHERE SubjectId = @param1 AND Name = @param0
 END
 
 
 
 CREATE PROCEDURE [dbo].[sp_updateTeacherForGroup]
-@groupName VARCHAR(100),
-@teacherId INT,
-@existingTeacherId INT
+@param0 VARCHAR(100),
+@param1 INT,
+@param2 INT
 AS
 BEGIN
 	UPDATE Groups
-	SET TeacherId =@teacherId
-	WHERE TeacherId = @existingTeacherId  AND [Name] = @groupName
+	SET TeacherId =@param1
+	WHERE TeacherId = @param2  AND [Name] = @param0
 END
 
 
 
 CREATE PROCEDURE [dbo].[sp_updateStudentForGroup]
-@existingStudentId INT,
-@studentId INT,
-@groupName VARCHAR(100)
+@param0 INT,
+@param1 INT,
+@param2 VARCHAR(100)
 AS
 BEGIN
     UPDATE Groups
-    SET StudentId = @studentId
-    WHERE StudentId = @existingStudentId AND [Name]=@groupName
+    SET StudentId = @param1
+    WHERE StudentId = @param0 AND [Name]=@param2
 END
 
 
 
 CREATE PROCEDURE [dbo].[sp_deleteStudentForGroup]
-@studentId INT,
-@groupName VARCHAR(100)
+@param0 INT,
+@param1 VARCHAR(100)
 AS
 BEGIN
     DELETE FROM Groups
-    WHERE StudentId = @studentId AND [Name] = @groupName
+    WHERE StudentId = @param0 AND [Name] = @param1
 END
 
 
 
 CREATE PROCEDURE sp_deleteGroup
-@name VARCHAR(100)
+@param0 VARCHAR(100)
 AS
 BEGIN
     DELETE FROM Groups
-    WHERE Name = @name
+    WHERE Name = @param0
 END
