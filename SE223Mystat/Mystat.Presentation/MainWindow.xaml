@@ -5,8 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Mystat.Presentation"
         mc:Ignorable="d"
-        Title="ავტორიზაცია" Height="450" Width="1000" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="ავტორიზაცია" Height="450" Width="1000" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Loaded="Window_Loaded">
     <StackPanel>
+        
+        <ListBox x:Name="StudentList" Cursor="Hand"></ListBox>
 
     </StackPanel>
+
 </Window>

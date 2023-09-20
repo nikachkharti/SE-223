@@ -7,4 +7,9 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Mystat.Models\Mystat.Models.csproj" />
+    <ProjectReference Include="..\MystatService\MystatService.csproj" />
+  </ItemGroup>
+
 </Project>
