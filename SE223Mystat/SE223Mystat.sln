@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mystat.Tests", "Mystat.Test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mystat.Abstraction", "Mystat.Abstraction\Mystat.Abstraction.csproj", "{98DBB907-3366-4041-A657-19076DE67A71}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mystat.Presentation", "Mystat.Presentation\Mystat.Presentation.csproj", "{502AF941-1187-4EBF-B138-6044A74AEE03}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mystat.Presentation", "Mystat.Presentation\Mystat.Presentation.csproj", "{F2BC6C29-AE05-47B3-AAF3-D2844DF74971}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,10 @@ Global
 		{98DBB907-3366-4041-A657-19076DE67A71}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{98DBB907-3366-4041-A657-19076DE67A71}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{98DBB907-3366-4041-A657-19076DE67A71}.Release|Any CPU.Build.0 = Release|Any CPU
-		{502AF941-1187-4EBF-B138-6044A74AEE03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{502AF941-1187-4EBF-B138-6044A74AEE03}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{502AF941-1187-4EBF-B138-6044A74AEE03}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{502AF941-1187-4EBF-B138-6044A74AEE03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2BC6C29-AE05-47B3-AAF3-D2844DF74971}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2BC6C29-AE05-47B3-AAF3-D2844DF74971}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2BC6C29-AE05-47B3-AAF3-D2844DF74971}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2BC6C29-AE05-47B3-AAF3-D2844DF74971}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
