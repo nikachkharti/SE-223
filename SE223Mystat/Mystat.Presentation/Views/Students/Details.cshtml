@@ -1,0 +1,18 @@
+﻿@model Student
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="row">
+    <div class="card">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">@Model.FirstName</li>
+            <li class="list-group-item">@Model.LastName</li>
+            <li class="list-group-item">@Model.RegisterDate</li>
+            <li class="list-group-item">@Model.Attends</li>
+            <li class="list-group-item">@Model.AttendsOnline</li>
+            <li class="list-group-item">@Model.Brilliants</li>
+            <li class="list-group-item">@Model.Comment</li>
+        </ul>
+    </div>
+</div>

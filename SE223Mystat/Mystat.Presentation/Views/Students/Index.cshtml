@@ -1,0 +1,31 @@
+﻿@model List<Student>
+
+<div class="row">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>სრული სახელი</th>
+                <th>რეგისტრაციის თარიღი</th>
+                <th>დასწრება ცოცხლად</th>
+                <th>დასწრება online</th>
+                <th>ბრილიანტები</th>
+                <th>რედაქტირება</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var student in Model)
+            {
+                <tr>
+                    <td>@student.FullName</td>
+                    <td>@student.RegisterDate</td>
+                    <td>@student.Attends</td>
+                    <td>@student.AttendsOnline</td>
+                    <td>@student.Brilliants</td>
+                    <td>
+                        <a asp-controller="Students" asp-action="Details" asp-route-Id="@student.Id" class="btn btn-primary">დეტალურად</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

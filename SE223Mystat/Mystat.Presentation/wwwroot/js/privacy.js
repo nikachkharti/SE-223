@@ -1,0 +1,1 @@
+﻿alert('PRIVACY PAGE');
