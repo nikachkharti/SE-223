@@ -1,0 +1,36 @@
+﻿@model Student
+<div class="row">
+    <form asp-controller="Students" asp-action="Create" method="post">
+        <div class="mb-3">
+            <label class="form-label" asp-for="FirstName"></label>
+            <input class="form-control" asp-for="FirstName" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label" asp-for="LastName"></label>
+            <input class="form-control" asp-for="LastName" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label" asp-for="RegisterDate"></label>
+            <input class="form-control" asp-for="RegisterDate" value="@DateTime.Now" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label" asp-for="Attends"></label>
+            <input class="form-control" asp-for="Attends" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label" asp-for="AttendsOnline"></label>
+            <input class="form-control" asp-for="AttendsOnline" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label" asp-for="Brilliants"></label>
+            <input class="form-control" asp-for="Brilliants" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label" asp-for="Comment"></label>
+            <textarea class="form-control" asp-for="Comment"></textarea>
+        </div>
+        <div class="mb-3">
+            <input type="submit" class="btn btn-success" value="დამატება" />
+        </div>
+    </form>
+</div>

@@ -21,9 +21,25 @@ namespace Mystat.Presentation.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            var student = await _unitOfWork.Student.GetStudentByIdAsync(id);
+            Student student = await _unitOfWork.Student.GetStudentByIdAsync(id);
             return View(student);
         }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(Student model)
+        {
+            await _unitOfWork.Student.AddNewStudentAsync(model);
+            return RedirectToAction("Index");
+        }
+
+        //ახალი სტუდენტის ჩამატება
+        //UPDATE
+        //DELETE
 
     }
 }

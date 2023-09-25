@@ -250,7 +250,7 @@ namespace Mystat.Abstraction
                         for (int i = 0; i < parameters.Length; i++)
                         {
                             string parameterName = $"param{i}";
-                            command.Parameters.AddWithValue(parameterName, parameters[i]);
+                            command.Parameters.AddWithValue(parameterName, parameters[i] ?? DBNull.Value);
                         }
                     }
 
