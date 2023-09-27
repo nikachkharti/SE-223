@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mystat.Tests", "Mystat.Test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mystat.Abstraction", "Mystat.Abstraction\Mystat.Abstraction.csproj", "{98DBB907-3366-4041-A657-19076DE67A71}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mystat.Presentation", "Mystat.Presentation\Mystat.Presentation.csproj", "{921F035E-2D0B-4ADE-B155-0582FFE38B6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mystat.Presentation", "Mystat.Presentation\Mystat.Presentation.csproj", "{921F035E-2D0B-4ADE-B155-0582FFE38B6B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OLD", "OLD", "{B75C4C67-0AB0-4CFF-9C08-81AEE0690A8F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +44,13 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6CED227A-BF27-4259-88D1-F2BF23E1FBB8} = {B75C4C67-0AB0-4CFF-9C08-81AEE0690A8F}
+		{EDB013A6-89B7-45EB-BC5F-150451A6F804} = {B75C4C67-0AB0-4CFF-9C08-81AEE0690A8F}
+		{360C2133-9613-403D-AD03-61ABD8B22E36} = {B75C4C67-0AB0-4CFF-9C08-81AEE0690A8F}
+		{98DBB907-3366-4041-A657-19076DE67A71} = {B75C4C67-0AB0-4CFF-9C08-81AEE0690A8F}
+		{921F035E-2D0B-4ADE-B155-0582FFE38B6B} = {B75C4C67-0AB0-4CFF-9C08-81AEE0690A8F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E521EBAF-A1DB-4E4B-9BFD-659891256F32}
