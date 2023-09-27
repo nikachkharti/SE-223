@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mystat.Presentation", "Myst
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OLD", "OLD", "{B75C4C67-0AB0-4CFF-9C08-81AEE0690A8F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library", "Library\Library.csproj", "{A8017F3B-A3FE-478B-8EC0-3225FF14DF89}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{921F035E-2D0B-4ADE-B155-0582FFE38B6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{921F035E-2D0B-4ADE-B155-0582FFE38B6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{921F035E-2D0B-4ADE-B155-0582FFE38B6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8017F3B-A3FE-478B-8EC0-3225FF14DF89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8017F3B-A3FE-478B-8EC0-3225FF14DF89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8017F3B-A3FE-478B-8EC0-3225FF14DF89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8017F3B-A3FE-478B-8EC0-3225FF14DF89}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
