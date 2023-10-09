@@ -11,6 +11,8 @@ namespace Library.Data
         }
 
         public DbSet<Author> Authors { get; set; }
+        public DbSet<Book> Books { get; set; }
+        public DbSet<BookAuthor> BookAuthor { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -40,6 +42,38 @@ namespace Library.Data
                         DateOfDeath = null
                     }
                 );
+
+            modelBuilder.Entity<Book>().HasData(
+                    new Book
+                    {
+                        Id = 1,
+                        Title = "TEST # 1",
+                        Description = null,
+                        Quantity = 10
+                    },
+                    new Book
+                    {
+                        Id = 2,
+                        Title = "TEST # 2",
+                        Description = null,
+                        Quantity = 10
+                    },
+                    new Book
+                    {
+                        Id = 3,
+                        Title = "TEST # 3",
+                        Description = null,
+                        Quantity = 10
+                    }
+                );
+
+
+            modelBuilder.Entity<BookAuthor>().HasData(
+                    new BookAuthor { Id = 1, AuthorId = 1, BookId = 1 },
+                    new BookAuthor { Id = 2, AuthorId = 2, BookId = 2 },
+                    new BookAuthor { Id = 3, AuthorId = 3, BookId = 3 }
+                );
+
         }
     }
 }
