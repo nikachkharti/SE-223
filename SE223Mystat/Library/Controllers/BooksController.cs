@@ -38,8 +38,18 @@ namespace Library.Controllers
 
         public IActionResult Edit(int id)
         {
-            var result = _context.Books.FirstOrDefault(x => x.Id == id);
-            return View(result);
+            BookWithManyAuthors bookWithManyAuthors = new();
+
+            bookWithManyAuthors.Book = _context.Books.FirstOrDefault(x => x.Id == id);
+
+            var authors = _context.BookAuthor
+                .Where(x => x.BookId == id)
+                .Include("Author")
+                .Select(x => x.Author)
+                .ToList();
+
+            bookWithManyAuthors.Authors = authors;
+            return View(bookWithManyAuthors);
         }
 
         public IActionResult Create()
@@ -58,6 +68,7 @@ namespace Library.Controllers
             return View(bookWithManyAuthors);
         }
 
+        //როდესაც ვუშვებთ მიგრაციას OnDelete ში Cascade ნიშნავს რომ საწყისი ჩანაწერი წაშლის ყველა წარმოებული ჩანაწერს ავტომატურად
         public IActionResult Delete(int id)
         {
             var book = _context.Books.FirstOrDefault(x => x.Id == id);
