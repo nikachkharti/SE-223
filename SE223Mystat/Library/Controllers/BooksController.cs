@@ -22,8 +22,18 @@ namespace Library.Controllers
 
         public IActionResult Details(int id)
         {
-            var result = _context.Books.FirstOrDefault(x => x.Id == id);
-            return View(result);
+            BookWithManyAuthors bookWithManyAuthors = new();
+            bookWithManyAuthors.Book = _context.Books.FirstOrDefault(x => x.Id == id);
+
+            var allSpecificBookWithAuthor = _context.BookAuthor
+                .Where(x => x.BookId == id)
+                .Include("Author")
+                .Select(x => x.Author)
+                .ToList();
+
+            bookWithManyAuthors.Authors = allSpecificBookWithAuthor;
+
+            return View(bookWithManyAuthors);
         }
 
         public IActionResult Edit(int id)
