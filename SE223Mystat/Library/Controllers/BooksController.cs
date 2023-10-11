@@ -42,10 +42,7 @@ namespace Library.Controllers
 
             bookWithManyAuthors.Book = _context.Books.FirstOrDefault(x => x.Id == id);
 
-            var authors = _context.BookAuthor
-                .Where(x => x.BookId == id)
-                .Include("Author")
-                .Select(x => x.Author)
+            var authors = _context.Authors
                 .ToList();
 
             bookWithManyAuthors.Authors = authors;
@@ -77,12 +74,40 @@ namespace Library.Controllers
 
 
         [HttpPost]
-        public IActionResult Edit(Book book)
+        public IActionResult Edit(BookWithManyAuthors bookWithManyAuthors)
         {
             if (ModelState.IsValid)
             {
-                _context.Books.Update(book);
+                _context.Books.Update(bookWithManyAuthors.Book);
                 _context.SaveChanges();
+
+                foreach (var selectedAuthorIdAsText in bookWithManyAuthors.SelectedAuthors)
+                {
+                    int.TryParse(selectedAuthorIdAsText, out int selectedAuthorID);
+
+                    var author = _context.Authors.Find(selectedAuthorID);
+
+                    if (author != null)
+                    {
+
+                        var oldBookRecords = _context.BookAuthor.Where(x => x.BookId == bookWithManyAuthors.Book.Id);
+                        _context.BookAuthor.RemoveRange(oldBookRecords);
+
+
+                        _context.BookAuthor.Update(new BookAuthor
+                        {
+                            BookId = bookWithManyAuthors.Book.Id,
+                            AuthorId = selectedAuthorID
+                        });
+
+                        _context.SaveChanges();
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index");
+                    }
+                }
+
             }
             return RedirectToAction("Index");
         }
