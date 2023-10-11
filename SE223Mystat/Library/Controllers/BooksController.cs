@@ -41,8 +41,11 @@ namespace Library.Controllers
             BookWithManyAuthors bookWithManyAuthors = new();
 
             bookWithManyAuthors.Book = _context.Books.FirstOrDefault(x => x.Id == id);
+            bookWithManyAuthors.AllAuthorsFromDatabase = _context.Authors.ToList();
 
-            var authors = _context.Authors
+            var authors = _context.BookAuthor
+                .Where(x => x.BookId == id)
+                .Select(x => x.Author)
                 .ToList();
 
             bookWithManyAuthors.Authors = authors;
@@ -100,7 +103,6 @@ namespace Library.Controllers
                             AuthorId = selectedAuthorID
                         });
 
-                        _context.SaveChanges();
                     }
                     else
                     {
@@ -109,6 +111,7 @@ namespace Library.Controllers
                 }
 
             }
+            _context.SaveChanges();
             return RedirectToAction("Index");
         }
 
