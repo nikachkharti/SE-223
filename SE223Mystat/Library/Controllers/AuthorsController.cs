@@ -1,4 +1,5 @@
-﻿using Library.Data;
+﻿using Library.Configuration;
+using Library.Data;
 using Library.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,38 +7,63 @@ namespace Library.Controllers
 {
     public class AuthorsController : Controller
     {
-        private readonly ApplicationDbContext _context;
-        public AuthorsController(ApplicationDbContext context)
+        private readonly IUnitOfWork _unitOfWork;
+        public AuthorsController(IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
         }
 
         public IActionResult Index()
         {
-            var authors = _context.Authors;
-            return View(authors);
+            try
+            {
+                var allAuthors = _unitOfWork.AuthorService.GetAllAuthors();
+                return View(allAuthors);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         public IActionResult Details(int id)
         {
-            var author = _context.Authors.FirstOrDefault(x => x.Id == id);
-            return View(author);
+            try
+            {
+                var singleAuthor = _unitOfWork.AuthorService.GetAuthor(id);
+                return View(singleAuthor);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         public IActionResult Edit(int id)
         {
-            var author = _context.Authors.FirstOrDefault(x => x.Id == id);
-            return View(author);
+            try
+            {
+                var singleAuthor = _unitOfWork.AuthorService.GetAuthor(id);
+                return View(singleAuthor);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         [HttpPost]
         public IActionResult Edit(Author author)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Authors.Update(author);
-                _context.SaveChanges();
+                _unitOfWork.AuthorService.Update(author);
+                _unitOfWork.Save();
             }
+            catch (Exception)
+            {
+            }
+
             return RedirectToAction("Index");
         }
 
@@ -50,25 +76,33 @@ namespace Library.Controllers
         [HttpPost]
         public IActionResult Create(Author model)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Authors.Add(model);
-                _context.SaveChanges();
-            }
-            return RedirectToAction("Index");
+            return View();
         }
 
         public IActionResult Delete(int id)
         {
-            var author = _context.Authors.FirstOrDefault(x => x.Id == id);
-            return View(author);
+            try
+            {
+                var singleAuthor = _unitOfWork.AuthorService.GetAuthor(id);
+                return View(singleAuthor);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         [HttpPost]
         public IActionResult Delete(Author model)
         {
-            _context.Authors.Remove(model);
-            _context.SaveChanges();
+            try
+            {
+                _unitOfWork.AuthorService.DeleteAuthor(model);
+                _unitOfWork.Save();
+            }
+            catch (Exception)
+            {
+            }
 
             return RedirectToAction("Index");
         }
