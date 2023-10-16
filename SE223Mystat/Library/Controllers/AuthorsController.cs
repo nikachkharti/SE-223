@@ -76,7 +76,19 @@ namespace Library.Controllers
         [HttpPost]
         public IActionResult Create(Author model)
         {
-            return View();
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _unitOfWork.AuthorService.Add(model);
+                    _unitOfWork.Save();
+                }
+            }
+            catch (Exception)
+            {
+            }
+
+            return RedirectToAction("Index");
         }
 
         public IActionResult Delete(int id)
