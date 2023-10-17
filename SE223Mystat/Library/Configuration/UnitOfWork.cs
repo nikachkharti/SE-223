@@ -3,7 +3,6 @@ using Library.Repository;
 using Library.Repository.Interfaces;
 using Library.Services;
 using Library.Services.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace Library.Configuration
 {
@@ -14,8 +13,9 @@ namespace Library.Configuration
         public IBookRepository Book { get; private set; }
         public IBookAuthorRepository BookAuthor { get; private set; }
 
-        public IAuthorService AuthorService { get; }
-
+        public IAuthorService AuthorService { get; private set; }
+        public IBookService BookService { get; private set; }
+        public IBookAuthorService BookAuthorService { get; private set; }
 
         public UnitOfWork(ApplicationDbContext context)
         {
@@ -27,6 +27,8 @@ namespace Library.Configuration
 
 
             AuthorService = new AuthorService(Author);
+            BookService = new BookService(Book, BookAuthor, Author);
+            BookAuthorService = new BookAuthorService(BookAuthor, Author);
         }
 
         public void Save() => _context.SaveChanges();
