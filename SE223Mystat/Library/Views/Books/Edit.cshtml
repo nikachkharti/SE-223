@@ -1,4 +1,4 @@
-﻿@model Library.Models.BookWithManyAuthors
+﻿@model BookWithManyAuthors
 
 @{
     ViewData["Title"] = "Edit";
@@ -29,12 +29,12 @@
                 <span asp-validation-for="Book.Quantity" class="text-danger"></span>
             </div>
             <div class="form-group">
-                @for (var i = 0; i < Model.AllAuthorsFromDatabase.Count; i++)
+                @for (var i = 0; i < Model.Authors.Count; i++)
                 {
                     <div>
-                        <input type="checkbox" id="AllAuthorsFromDatabase[@i]" name="SelectedAuthors" value="@Model.AllAuthorsFromDatabase[i].Id"
-                        @(Model.SelectedAuthors != null && Model.SelectedAuthors.Contains(Model.AllAuthorsFromDatabase[i].Id.ToString()) ? "checked" : "")>
-                        <label for="AllAuthorsFromDatabase[@i]">@Model.AllAuthorsFromDatabase[i].FirstName @Model.AllAuthorsFromDatabase[i].LastName</label>
+                        <input type="checkbox" id="Authors[@i]" name="SelectedAuthorIds" value="@Model.Authors[i].Id"
+                        @(Model.SelectedAuthorIds != null && Model.SelectedAuthorIds.Contains(Model.Authors[i].Id.ToString()) ? "checked" : "")>
+                        <label for="Authors[@i]">@Model.Authors[i].FirstName @Model.Authors[i].LastName</label>
                     </div>
                 }
             </div>
@@ -42,7 +42,7 @@
             <hr />
 
             <div class="form-group">
-                @foreach (var item in Model.Authors)
+                @foreach (var item in Model.AuthorsOfTheBook)
                 {
                     <p>@item.FirstName @item.LastName</p>
                 }

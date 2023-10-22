@@ -19,9 +19,64 @@ namespace Library.Repository
         public void Add(T entity) => _dbSet.Add(entity);
         public void Remove(T entity) => _dbSet.Remove(entity);
         public void RemoveRange(IEnumerable<T> entites) => _dbSet.RemoveRange(entites);
-        public IEnumerable<T> GetAll() => _dbSet.ToList();
-        public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter) => _dbSet.Where(filter).ToList();
-        public T Get(Expression<Func<T, bool>> filter) => _dbSet.Where(filter).FirstOrDefault();
 
+
+        public IEnumerable<T> GetAll(string? includeProperties = null)
+        {
+            if (!string.IsNullOrWhiteSpace(includeProperties))
+            {
+                IQueryable<T> query = _dbSet;
+
+                foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProperty);
+                }
+
+                return query.ToList();
+            }
+
+            return _dbSet.ToList();
+        }
+
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter, string? includeProperties = null)
+        {
+            if (!string.IsNullOrWhiteSpace(includeProperties))
+            {
+                IQueryable<T> query = _dbSet;
+
+                foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProperty);
+                }
+
+                return query
+                    .Where(filter)
+                    .ToList();
+            }
+            return _dbSet
+                .Where(filter)
+                .ToList();
+        }
+
+        public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null)
+        {
+            if (!string.IsNullOrWhiteSpace(includeProperties))
+            {
+                IQueryable<T> query = _dbSet;
+
+                foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProperty);
+                }
+
+                return query
+                    .Where(filter)
+                    .FirstOrDefault();
+            }
+
+            return _dbSet
+                .Where(filter)
+                .FirstOrDefault();
+        }
     }
 }

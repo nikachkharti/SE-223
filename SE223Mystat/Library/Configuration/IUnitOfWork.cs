@@ -12,5 +12,7 @@ namespace Library.Configuration
         public IBookAuthorRepository BookAuthor { get; }
 
         public IAuthorService AuthorService { get; }
+        public IBookService BookService { get; }
+        public IBookAuthorService BookAuthorService { get; }
     }
 }

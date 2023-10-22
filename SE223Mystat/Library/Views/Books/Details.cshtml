@@ -1,4 +1,4 @@
-﻿@model Library.Models.BookWithManyAuthors
+﻿@model BookWithManyAuthors
 
 @{
     ViewData["Title"] = "Details";
@@ -32,7 +32,7 @@
 </div>
 
 <div class="mt-5">
-    @foreach (var item in Model.Authors)
+    @foreach (var item in Model.AuthorsOfTheBook)
     {
         <p>@item.FirstName @item.LastName</p>
     }
