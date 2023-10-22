@@ -12,6 +12,8 @@ using Microsoft.EntityFrameworkCore;
 //2. შექმენით ბაზაში ამ მოდელის შესაბამისი ცხრილი და შეავსეთ იგი სატესტო მონაცემებით
 //3.ააწყვეთ ფუნქციონალი რომელიც პასუხსმგებელი იქნება თანამშრომლების მენეჯმენტზე
 
+//ყველაფერი ეს შეასრულეთ Entity Framework ის გამოყენებით.
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
