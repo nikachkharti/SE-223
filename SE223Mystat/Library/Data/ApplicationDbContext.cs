@@ -13,6 +13,9 @@ namespace Library.Data
         public DbSet<Author> Authors { get; set; }
         public DbSet<Book> Books { get; set; }
         public DbSet<BookAuthor> BookAuthor { get; set; }
+        public DbSet<Department> Departments { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -74,6 +77,57 @@ namespace Library.Data
                     new BookAuthor { Id = 3, AuthorId = 3, BookId = 3 }
                 );
 
+
+            modelBuilder.Entity<Department>().HasData(
+                    new Department { Id = 1, Name = "Service", Salary = 1500 },
+                    new Department { Id = 2, Name = "Marketing", Salary = 2500 },
+                    new Department { Id = 3, Name = "IT", Salary = 3500 },
+                    new Department { Id = 4, Name = "Administration", Salary = 4500 }
+                );
+
+
+            modelBuilder.Entity<Employee>().HasData(
+                    new Employee
+                    {
+                        Id = 1,
+                        FirstName = "Tamta",
+                        LastName = "Grigolia",
+                        Email = "tamta@gmail.com",
+                        PhoneNumber = "555332211",
+                        Pin = "01024085082",
+                        DepartmentId = 3
+                    },
+                    new Employee
+                    {
+                        Id = 2,
+                        FirstName = "Archil",
+                        LastName = "Menabde",
+                        Email = "archil@gmail.com",
+                        PhoneNumber = "595332211",
+                        Pin = "01024085092",
+                        DepartmentId = 3
+                    },
+                    new Employee
+                    {
+                        Id = 3,
+                        FirstName = "Saba",
+                        LastName = "Gurgenidze",
+                        Email = "saba@gmail.com",
+                        PhoneNumber = "553332211",
+                        Pin = "11024085092",
+                        DepartmentId = 2
+                    },
+                    new Employee
+                    {
+                        Id = 4,
+                        FirstName = "Nika",
+                        LastName = "Chkhartishvili",
+                        Email = "nika.chkhartishvili7@gmail.com",
+                        PhoneNumber = "555337681",
+                        Pin = "01024085083",
+                        DepartmentId = 4
+                    }
+                );
         }
     }
 }
