@@ -1,6 +1,7 @@
 ﻿using Library.Data;
 using Library.Models;
 using Library.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Library.Repository
 {
@@ -12,9 +13,9 @@ namespace Library.Repository
             _context = context;
         }
 
-        public void Update(Department entity)
+        public async Task Update(Department entity)
         {
-            var departmentToUpdate = _context.Departments.FirstOrDefault(x => x.Id == entity.Id);
+            var departmentToUpdate = await _context.Departments.FirstOrDefaultAsync(x => x.Id == entity.Id);
 
             if (departmentToUpdate != null)
             {
