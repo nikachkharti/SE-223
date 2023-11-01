@@ -14,16 +14,16 @@ namespace Library.Services
             _employeeRepository = employeeRepository;
         }
 
-        public void Add(EmployeeWithManyDepartments model)
+        public async Task Add(EmployeeWithManyDepartments model)
         {
             if (model is null)
                 throw new ArgumentNullException(nameof(model));
-            _employeeRepository.Add(model.Employee);
+            await _employeeRepository.Add(model.Employee);
         }
 
-        public void DeleteEmployee(Employee model)
+        public async Task DeleteEmployee(Employee model)
         {
-            var result = _employeeRepository.Get(author => author.Id == model.Id);
+            var result = await _employeeRepository.Get(author => author.Id == model.Id);
 
             if (result is not null)
             {
@@ -35,15 +35,14 @@ namespace Library.Services
             }
         }
 
-        public List<Employee> GetAllEmployees()
+        public async Task<List<Employee>> GetAllEmployees()
         {
-            var result = _employeeRepository
-                .GetAll(includeProperties: "Department")
-                .ToList();
+            var result = await _employeeRepository
+                .GetAll(includeProperties: "Department");
 
             if (result.Count() > 0)
             {
-                return result;
+                return result.ToList();
             }
             else
             {
@@ -51,9 +50,9 @@ namespace Library.Services
             }
         }
 
-        public Employee GetEmployee(int id)
+        public async Task<Employee> GetEmployee(int id)
         {
-            var result = _employeeRepository
+            var result = await _employeeRepository
                 .Get(author => author.Id == id, "Department");
 
             if (result is not null)

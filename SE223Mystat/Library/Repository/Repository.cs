@@ -16,12 +16,12 @@ namespace Library.Repository
             _dbSet = _context.Set<T>();
         }
 
-        public void Add(T entity) => _dbSet.Add(entity);
+        public async Task Add(T entity) => await _dbSet.AddAsync(entity);
         public void Remove(T entity) => _dbSet.Remove(entity);
         public void RemoveRange(IEnumerable<T> entites) => _dbSet.RemoveRange(entites);
 
 
-        public IEnumerable<T> GetAll(string? includeProperties = null)
+        public async Task<IEnumerable<T>> GetAll(string? includeProperties = null)
         {
             if (!string.IsNullOrWhiteSpace(includeProperties))
             {
@@ -32,13 +32,13 @@ namespace Library.Repository
                     query = query.Include(includeProperty);
                 }
 
-                return query.ToList();
+                return await query.ToListAsync();
             }
 
-            return _dbSet.ToList();
+            return await _dbSet.ToListAsync();
         }
 
-        public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter, string? includeProperties = null)
+        public async Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>> filter, string? includeProperties = null)
         {
             if (!string.IsNullOrWhiteSpace(includeProperties))
             {
@@ -49,16 +49,16 @@ namespace Library.Repository
                     query = query.Include(includeProperty);
                 }
 
-                return query
+                return await query
                     .Where(filter)
-                    .ToList();
+                    .ToListAsync();
             }
-            return _dbSet
+            return await _dbSet
                 .Where(filter)
-                .ToList();
+                .ToListAsync();
         }
 
-        public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null)
+        public async Task<T> Get(Expression<Func<T, bool>> filter, string? includeProperties = null)
         {
             if (!string.IsNullOrWhiteSpace(includeProperties))
             {
@@ -69,14 +69,14 @@ namespace Library.Repository
                     query = query.Include(includeProperty);
                 }
 
-                return query
+                return await query
                     .Where(filter)
-                    .FirstOrDefault();
+                    .FirstOrDefaultAsync();
             }
 
-            return _dbSet
+            return await _dbSet
                 .Where(filter)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
         }
     }
 }

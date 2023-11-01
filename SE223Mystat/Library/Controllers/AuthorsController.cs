@@ -13,11 +13,11 @@ namespace Library.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             try
             {
-                var allAuthors = _unitOfWork.AuthorService.GetAllAuthors();
+                var allAuthors = await _unitOfWork.AuthorService.GetAllAuthors();
                 return View(allAuthors);
             }
             catch (Exception)
@@ -26,11 +26,11 @@ namespace Library.Controllers
             }
         }
 
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
             try
             {
-                var singleAuthor = _unitOfWork.AuthorService.GetAuthor(id);
+                var singleAuthor = await _unitOfWork.AuthorService.GetAuthor(id);
                 return View(singleAuthor);
             }
             catch (Exception)
@@ -39,11 +39,11 @@ namespace Library.Controllers
             }
         }
 
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
             try
             {
-                var singleAuthor = _unitOfWork.AuthorService.GetAuthor(id);
+                var singleAuthor = await _unitOfWork.AuthorService.GetAuthor(id);
                 return View(singleAuthor);
             }
             catch (Exception)
@@ -53,12 +53,12 @@ namespace Library.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(Author author)
+        public async Task<IActionResult> Edit(Author author)
         {
             try
             {
                 _unitOfWork.AuthorService.Update(author);
-                _unitOfWork.Save();
+                await _unitOfWork.Save();
             }
             catch (Exception)
             {
@@ -74,14 +74,14 @@ namespace Library.Controllers
 
 
         [HttpPost]
-        public IActionResult Create(Author model)
+        public async Task<IActionResult> Create(Author model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _unitOfWork.AuthorService.Add(model);
-                    _unitOfWork.Save();
+                    await _unitOfWork.AuthorService.Add(model);
+                    await _unitOfWork.Save();
                 }
             }
             catch (Exception)
@@ -91,11 +91,11 @@ namespace Library.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {
-                var singleAuthor = _unitOfWork.AuthorService.GetAuthor(id);
+                var singleAuthor = await _unitOfWork.AuthorService.GetAuthor(id);
                 return View(singleAuthor);
             }
             catch (Exception)
@@ -105,12 +105,12 @@ namespace Library.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(Author model)
+        public async Task<IActionResult> Delete(Author model)
         {
             try
             {
-                _unitOfWork.AuthorService.DeleteAuthor(model);
-                _unitOfWork.Save();
+                await _unitOfWork.AuthorService.DeleteAuthor(model);
+                await _unitOfWork.Save();
             }
             catch (Exception)
             {

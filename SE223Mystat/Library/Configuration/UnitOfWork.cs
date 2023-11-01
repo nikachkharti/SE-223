@@ -38,7 +38,7 @@ namespace Library.Configuration
             EmployeeService = new EmployeeService(Employee);
         }
 
-        public void Save() => _context.SaveChanges();
+        public async Task Save() => await _context.SaveChangesAsync();
 
     }
 }

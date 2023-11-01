@@ -17,11 +17,11 @@ namespace Library.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             try
             {
-                var result = _unitOfWork.BookService.GetAllBooks();
+                var result = await _unitOfWork.BookService.GetAllBooks();
                 return View(result);
             }
             catch (Exception)
@@ -30,11 +30,11 @@ namespace Library.Controllers
             }
         }
 
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
             try
             {
-                var result = _unitOfWork.BookService.GetSingleBookWithAuthors(id);
+                var result = await _unitOfWork.BookService.GetSingleBookWithAuthors(id);
                 return View(result);
             }
             catch (Exception)
@@ -43,11 +43,11 @@ namespace Library.Controllers
             }
         }
 
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
             try
             {
-                var result = _unitOfWork.BookService.GetSingleBookWithAuthors(id);
+                var result = await _unitOfWork.BookService.GetSingleBookWithAuthors(id);
                 return View(result);
             }
             catch (Exception)
@@ -56,13 +56,17 @@ namespace Library.Controllers
             }
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             try
             {
                 BookWithManyAuthors bookWithManyAuthors = new();
-                bookWithManyAuthors.Book = GetSingleBookWithAllAuthors().Book;
-                bookWithManyAuthors.Authors = GetSingleBookWithAllAuthors().Authors;
+
+                var book = await GetSingleBookWithAllAuthors();
+                var author = await GetSingleBookWithAllAuthors();
+
+                bookWithManyAuthors.Book = book.Book;
+                bookWithManyAuthors.Authors = author.Authors;
 
                 return View(bookWithManyAuthors);
             }
@@ -70,7 +74,6 @@ namespace Library.Controllers
             {
                 return RedirectToAction(nameof(Index));
             }
-
 
             //ძველი კოდი არ წავშალე სპეციალურად თუ დაგჭირდებათ ჩმოსაშლელი მენიუს გამოყენება ეწყობა ესე.
             //bookWithManyAuthors.AuthorsSelectList = bookWithManyAuthors.Authors.Select(x => new SelectListItem()
@@ -80,11 +83,11 @@ namespace Library.Controllers
             //});
         }
 
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {
-                var result = _unitOfWork.BookService.GetSingleBookWithAuthors(id);
+                var result = await _unitOfWork.BookService.GetSingleBookWithAuthors(id);
                 return View(result);
             }
             catch (Exception)
@@ -95,17 +98,17 @@ namespace Library.Controllers
 
 
         [HttpPost]
-        public IActionResult Edit(BookWithManyAuthors bookWithManyAuthors)
+        public async Task<IActionResult> Edit(BookWithManyAuthors bookWithManyAuthors)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _unitOfWork.BookAuthorService.UpdateAuthorsOfTheBook(bookWithManyAuthors.Book.Id, bookWithManyAuthors.SelectedAuthorIds);
-                    _unitOfWork.Save();
+                    await _unitOfWork.BookAuthorService.UpdateAuthorsOfTheBook(bookWithManyAuthors.Book.Id, bookWithManyAuthors.SelectedAuthorIds);
+                    await _unitOfWork.Save();
 
                     _unitOfWork.BookService.UpdateBook(bookWithManyAuthors);
-                    _unitOfWork.Save();
+                    await _unitOfWork.Save();
                 }
             }
             catch (Exception)
@@ -117,17 +120,17 @@ namespace Library.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(BookWithManyAuthors newBookModel)
+        public async Task<IActionResult> Create(BookWithManyAuthors newBookModel)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _unitOfWork.BookService.AddNewBook(newBookModel);
-                    _unitOfWork.Save();
+                    await _unitOfWork.BookService.AddNewBook(newBookModel);
+                    await _unitOfWork.Save();
 
-                    _unitOfWork.BookService.AddAuthorsOfTheBook(newBookModel, newBookModel.SelectedAuthorIds);
-                    _unitOfWork.Save();
+                    await _unitOfWork.BookService.AddAuthorsOfTheBook(newBookModel, newBookModel.SelectedAuthorIds);
+                    await _unitOfWork.Save();
                 }
             }
             catch (Exception)
@@ -138,12 +141,12 @@ namespace Library.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(BookAuthor model)
+        public async Task<IActionResult> Delete(BookAuthor model)
         {
             try
             {
-                _unitOfWork.BookService.DeleteBook(model.Id);
-                _unitOfWork.Save();
+                await _unitOfWork.BookService.DeleteBook(model.Id);
+                await _unitOfWork.Save();
             }
             catch (Exception)
             {
@@ -155,18 +158,17 @@ namespace Library.Controllers
 
 
 
-        private BookWithManyAuthors GetSingleBookWithAllAuthors()
+        private async Task<BookWithManyAuthors> GetSingleBookWithAllAuthors()
         {
             BookWithManyAuthors result = new();
             try
             {
                 result.Book = new();
 
-                result.Authors = _unitOfWork.AuthorService
-                    .GetAllAuthors()
-                    .ToList();
+                result.Authors = await _unitOfWork.AuthorService
+                    .GetAllAuthors();
 
-                result.AuthorsOfTheBook = _unitOfWork.BookAuthorService
+                result.AuthorsOfTheBook = await _unitOfWork.BookAuthorService
                     .GetAllBooksWithAuthors(result.Book.Id);
             }
             catch (Exception)

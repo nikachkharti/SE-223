@@ -12,11 +12,11 @@ namespace Library.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             try
             {
-                var result = _unitOfWork.DepartmentService.GetAllDepartments();
+                var result = await _unitOfWork.DepartmentService.GetAllDepartments();
                 return View(result);
             }
             catch (Exception)
@@ -25,11 +25,11 @@ namespace Library.Controllers
             }
         }
 
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
             try
             {
-                var result = _unitOfWork.DepartmentService.GetDepartment(id);
+                var result = await _unitOfWork.DepartmentService.GetDepartment(id);
                 return View(result);
             }
             catch (Exception)
@@ -38,11 +38,11 @@ namespace Library.Controllers
             }
         }
 
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
             try
             {
-                var result = _unitOfWork.DepartmentService.GetDepartment(id);
+                var result = await _unitOfWork.DepartmentService.GetDepartment(id);
                 return View(result);
             }
             catch (Exception)
@@ -52,12 +52,12 @@ namespace Library.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(Department model)
+        public async Task<IActionResult> Edit(Department model)
         {
             try
             {
                 _unitOfWork.DepartmentService.Update(model);
-                _unitOfWork.Save();
+                await _unitOfWork.Save();
             }
             catch (Exception)
             {
@@ -66,11 +66,11 @@ namespace Library.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {
-                var result = _unitOfWork.DepartmentService.GetDepartment(id);
+                var result = await _unitOfWork.DepartmentService.GetDepartment(id);
                 return View(result);
             }
             catch (Exception)
@@ -81,12 +81,12 @@ namespace Library.Controllers
 
 
         [HttpPost]
-        public IActionResult Delete(Department model)
+        public async Task<IActionResult> Delete(Department model)
         {
             try
             {
-                _unitOfWork.DepartmentService.DeleteDepartment(model);
-                _unitOfWork.Save();
+                await _unitOfWork.DepartmentService.DeleteDepartment(model);
+                await _unitOfWork.Save();
             }
             catch (Exception)
             {
@@ -101,14 +101,14 @@ namespace Library.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Department model)
+        public async Task<IActionResult> Create(Department model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _unitOfWork.DepartmentService.Add(model);
-                    _unitOfWork.Save();
+                    await _unitOfWork.DepartmentService.Add(model);
+                    await _unitOfWork.Save();
                 }
             }
             catch (Exception)

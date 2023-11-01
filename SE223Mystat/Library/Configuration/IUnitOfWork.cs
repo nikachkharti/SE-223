@@ -5,7 +5,7 @@ namespace Library.Configuration
 {
     public interface IUnitOfWork
     {
-        void Save();
+        Task Save();
 
         public IAuthorRepository Author { get; }
         public IBookRepository Book { get; }

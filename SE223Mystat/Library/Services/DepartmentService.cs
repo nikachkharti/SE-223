@@ -12,16 +12,16 @@ namespace Library.Services
             _departmentRepository = departmentRepository;
         }
 
-        public void Add(Department model)
+        public async Task Add(Department model)
         {
             if (model is null)
                 throw new ArgumentNullException(nameof(model));
-            _departmentRepository.Add(model);
+            await _departmentRepository.Add(model);
         }
 
-        public void DeleteDepartment(Department model)
+        public async Task DeleteDepartment(Department model)
         {
-            var result = _departmentRepository.Get(author => author.Id == model.Id);
+            var result = await _departmentRepository.Get(author => author.Id == model.Id);
 
             if (result is not null)
             {
@@ -33,13 +33,13 @@ namespace Library.Services
             }
         }
 
-        public List<Department> GetAllDepartments()
+        public async Task<List<Department>> GetAllDepartments()
         {
-            var result = _departmentRepository.GetAll().ToList();
+            var result = await _departmentRepository.GetAll();
 
             if (result.Count() > 0)
             {
-                return result;
+                return result.ToList();
             }
             else
             {
@@ -47,9 +47,9 @@ namespace Library.Services
             }
         }
 
-        public Department GetDepartment(int id)
+        public async Task<Department> GetDepartment(int id)
         {
-            var result = _departmentRepository.Get(author => author.Id == id);
+            var result = await _departmentRepository.Get(author => author.Id == id);
 
             if (result is not null)
             {
