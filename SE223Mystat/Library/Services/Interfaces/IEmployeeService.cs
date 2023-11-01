@@ -5,10 +5,10 @@ namespace Library.Services.Interfaces
 {
     public interface IEmployeeService
     {
-        List<Employee> GetAllEmployees();
-        Employee GetEmployee(int id);
-        void DeleteEmployee(Employee model);
-        void Add(EmployeeWithManyDepartments model);
+        Task<List<Employee>> GetAllEmployees();
+        Task<Employee> GetEmployee(int id);
+        Task DeleteEmployee(Employee model);
+        Task Add(EmployeeWithManyDepartments model);
         void UpdateEmployee(EmployeeWithManyDepartments model);
     }
 }

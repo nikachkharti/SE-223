@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Library.Models.ViewModels;
+using System.ComponentModel.DataAnnotations;
 
 namespace Library.Models
 {
@@ -12,5 +13,10 @@ namespace Library.Models
         public string? Description { get; set; }
         [Required]
         public int Quantity { get; set; }
+
+        public static implicit operator Book(BookWithManyAuthors v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

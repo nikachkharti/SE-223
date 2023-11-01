@@ -4,10 +4,10 @@ namespace Library.Services.Interfaces
 {
     public interface IDepartmentService
     {
-        List<Department> GetAllDepartments();
-        Department GetDepartment(int id);
-        void DeleteDepartment(Department model);
-        void Add(Department model);
+        Task<List<Department>> GetAllDepartments();
+        Task<Department> GetDepartment(int id);
+        Task DeleteDepartment(Department model);
+        Task Add(Department model);
         void Update(Department model);
     }
 }

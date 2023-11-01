@@ -17,17 +17,17 @@ namespace Library.Services
             _authorRepository = authorRepository;
         }
 
-        public void AddAuthorsOfTheBook(BookWithManyAuthors newBook, List<string> selectedAuthorIds)
+        public async Task AddAuthorsOfTheBook(BookWithManyAuthors newBook, List<string> selectedAuthorIds)
         {
             foreach (var selectedAuthorIdAsText in selectedAuthorIds)
             {
                 int.TryParse(selectedAuthorIdAsText, out int authorId);
 
-                var author = _authorRepository.GetAll(x => x.Id == authorId).ToList();
+                var author = await _authorRepository.GetAll(x => x.Id == authorId);
 
                 if (author != null)
                 {
-                    _bookAuthorRepository.Add(new BookAuthor
+                    await _bookAuthorRepository.Add(new BookAuthor
                     {
                         BookId = newBook.Book.Id,
                         AuthorId = authorId
@@ -40,37 +40,41 @@ namespace Library.Services
             }
         }
 
-        public void AddNewBook(BookWithManyAuthors newBook)
+        public async Task AddNewBook(BookWithManyAuthors newBook)
         {
-            _bookRepository.Add(newBook.Book);
+            await _bookRepository.Add(newBook.Book);
         }
 
-        public void DeleteBook(int id)
+        public async Task DeleteBook(int id)
         {
-            var bookToDelete = _bookRepository.Get(x => x.Id == id);
+            var bookToDelete = await _bookRepository.Get(x => x.Id == id);
             _bookRepository.Remove(bookToDelete);
         }
 
-        public List<Book> GetAllBooks()
+        public async Task<List<Book>> GetAllBooks()
         {
-            var allBooks = _bookRepository.GetAll();
+            var allBooks = await _bookRepository.GetAll();
             return allBooks.ToList();
         }
 
-        public BookWithManyAuthors GetSingleBookWithAuthors(int bookId)
+        public async Task<BookWithManyAuthors> GetSingleBookWithAuthors(int bookId)
         {
             BookWithManyAuthors result = new();
 
-            result.Book = _bookRepository.Get(x => x.Id == bookId);
+            result.Book = await _bookRepository.Get(x => x.Id == bookId);
 
-            result.AuthorsOfTheBook = _bookAuthorRepository
-                .GetAll(filter: x => x.BookId == bookId, includeProperties: "Author")
+            var x = await _bookAuthorRepository
+                .GetAll(filter: x => x.BookId == bookId, includeProperties: "Author");
+
+            result.AuthorsOfTheBook = x
                 .Select(x => x.Author)
                 .ToList();
 
-            result.Authors = _authorRepository
-                .GetAll()
-                .ToList();
+
+            var y = await _authorRepository
+                .GetAll();
+
+            result.Authors = y.ToList();
 
             return result;
         }

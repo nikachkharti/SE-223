@@ -14,13 +14,13 @@ namespace Library.Services
             _authorRepository = authorRepository;
         }
 
-        public List<Author> GetAllAuthors()
+        public async Task<List<Author>> GetAllAuthors()
         {
-            var result = _authorRepository.GetAll().ToList();
+            var result = await _authorRepository.GetAll();
 
             if (result.Count() > 0)
             {
-                return result;
+                return result.ToList();
             }
             else
             {
@@ -28,9 +28,9 @@ namespace Library.Services
             }
         }
 
-        public Author GetAuthor(int id)
+        public async Task<Author> GetAuthor(int id)
         {
-            var result = _authorRepository.Get(author => author.Id == id);
+            var result = await _authorRepository.Get(author => author.Id == id);
 
             if (result is not null)
             {
@@ -42,9 +42,9 @@ namespace Library.Services
             }
         }
 
-        public void DeleteAuthor(Author model)
+        public async Task DeleteAuthor(Author model)
         {
-            var authorToDelete = _authorRepository.Get(author => author.Id == model.Id);
+            var authorToDelete = await _authorRepository.Get(author => author.Id == model.Id);
 
             if (authorToDelete is not null)
             {
@@ -57,15 +57,17 @@ namespace Library.Services
         }
 
 
-        public void Add(Author newAuthorModel)
+        public async Task Add(Author newAuthorModel)
         {
-            bool authorAlreadyExists = _authorRepository
-                .GetAll()
+            var allAuthors = await _authorRepository.GetAll();
+
+            bool authorAlreadyExists = allAuthors
                 .Any(x => x.FirstName.Contains(newAuthorModel.FirstName, StringComparison.OrdinalIgnoreCase) && x.LastName.Contains(newAuthorModel.LastName, StringComparison.OrdinalIgnoreCase));
+
 
             if (!authorAlreadyExists)
             {
-                _authorRepository.Add(newAuthorModel);
+                await _authorRepository.Add(newAuthorModel);
             }
             else
             {

@@ -14,11 +14,11 @@ namespace Library.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             try
             {
-                var result = _unitOfWork.EmployeeService.GetAllEmployees();
+                var result = await _unitOfWork.EmployeeService.GetAllEmployees();
                 return View(result);
             }
             catch (Exception)
@@ -27,11 +27,11 @@ namespace Library.Controllers
             }
         }
 
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
             try
             {
-                var result = _unitOfWork.EmployeeService.GetEmployee(id);
+                var result = await _unitOfWork.EmployeeService.GetEmployee(id);
                 return View(result);
             }
             catch (Exception)
@@ -40,15 +40,14 @@ namespace Library.Controllers
             }
         }
 
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
             try
             {
-                EmployeeWithManyDepartments employeeWithManyDepartments = new()
-                {
-                    Employee = _unitOfWork.EmployeeService.GetEmployee(id),
-                    Departments = _unitOfWork.DepartmentService.GetAllDepartments().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name })
-                };
+                EmployeeWithManyDepartments employeeWithManyDepartments = new();
+                employeeWithManyDepartments.Employee = await _unitOfWork.EmployeeService.GetEmployee(id);
+                var allDepartments = await _unitOfWork.DepartmentService.GetAllDepartments();
+                employeeWithManyDepartments.Departments = allDepartments.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name });
 
                 return View(employeeWithManyDepartments);
             }
@@ -59,12 +58,12 @@ namespace Library.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(EmployeeWithManyDepartments model)
+        public async Task<IActionResult> Edit(EmployeeWithManyDepartments model)
         {
             try
             {
                 _unitOfWork.EmployeeService.UpdateEmployee(model);
-                _unitOfWork.Save();
+                await _unitOfWork.Save();
             }
             catch (Exception)
             {
@@ -74,11 +73,11 @@ namespace Library.Controllers
         }
 
 
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {
-                var result = _unitOfWork.EmployeeService.GetEmployee(id);
+                var result = await _unitOfWork.EmployeeService.GetEmployee(id);
                 return View(result);
             }
             catch (Exception)
@@ -89,12 +88,12 @@ namespace Library.Controllers
 
 
         [HttpPost]
-        public IActionResult Delete(Employee model)
+        public async Task<IActionResult> Delete(Employee model)
         {
             try
             {
-                _unitOfWork.EmployeeService.DeleteEmployee(model);
-                _unitOfWork.Save();
+                await _unitOfWork.EmployeeService.DeleteEmployee(model);
+                await _unitOfWork.Save();
             }
             catch (Exception)
             {
@@ -103,27 +102,26 @@ namespace Library.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            EmployeeWithManyDepartments employeeWithManyDepartments = new()
-            {
-                Employee = new(),
-                Departments = _unitOfWork.DepartmentService.GetAllDepartments().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name })
-            };
+            EmployeeWithManyDepartments employeeWithManyDepartments = new();
+            employeeWithManyDepartments.Employee = new();
+            var allDepartments = await _unitOfWork.DepartmentService.GetAllDepartments();
+            employeeWithManyDepartments.Departments = allDepartments.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name });
 
             return View(employeeWithManyDepartments);
         }
 
 
         [HttpPost]
-        public IActionResult Create(EmployeeWithManyDepartments model)
+        public async Task<IActionResult> Create(EmployeeWithManyDepartments model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _unitOfWork.EmployeeService.Add(model);
-                    _unitOfWork.Save();
+                    await _unitOfWork.EmployeeService.Add(model);
+                    await _unitOfWork.Save();
                 }
             }
             catch (Exception)
