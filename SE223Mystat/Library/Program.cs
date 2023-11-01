@@ -1,35 +1,26 @@
 ﻿using Library.Configuration;
 using Library.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-
-//TODO 1. ბიბლიოთეკას ჰყავს თანამშრომლები შექმენით თანამშრომლის აღმნიშვნელი შესაბამისი ტიპი Employee შემდეგი პარამეტრებით:
-//სახელი
-//გვარი
-//პირადი ნომერი
-//ელ ფოსტა
-//ტელეფონის ნომერი
-//2. შექმენით ბაზაში ამ მოდელის შესაბამისი ცხრილი და შეავსეთ იგი სატესტო მონაცემებით
-//3.ააწყვეთ ფუნქციონალი რომელიც პასუხსმგებელი იქნება თანამშრომლების მენეჯმენტზე
-
-
-
-//2.თითოეული თანამშრომელი მუშაობს გარკვეულ დეპარტამენტში (ServiceDept,MarketingDept,DeveloperDept,AdministrationDept)
-//უნდა შექმნათ დეპარტამენტის  აღმნიშვნელი შესაბამისი ტიპი შემდეგი პარამეტრებით:
-
-//დეპარტამენტის დასახელება
-//დეპარტამენტისთვის დამახასიათებელი ხელფასი
-
-//3. თანამშრომლების და დეპარტამენტების ცხრილები დაუკავშირეთ ერთმანეთს.
-
-
-//ყველაფერი ეს შეასრულეთ Entity Framework ის გამოყენებით.
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SQLServerConnection")));
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+{
+    options.Password.RequiredLength = 1;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireDigit = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireLowercase = false;
+
+    options.User.RequireUniqueEmail = false;
+}).AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddAutoMapper(typeof(Program));
+
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
@@ -47,6 +38,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
