@@ -1,9 +1,11 @@
 ﻿using Library.Configuration;
 using Library.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class DepartmentsController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

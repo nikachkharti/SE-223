@@ -1,11 +1,13 @@
 ﻿using Library.Configuration;
 using Library.Models;
 using Library.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Library.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class EmployeesController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
