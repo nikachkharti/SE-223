@@ -1,11 +1,8 @@
-﻿using Library.Configuration;
-using Library.Data;
+﻿using Library.Entities;
 using Library.Models;
-using Library.Models.ViewModels;
+using Library.Service.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 
 namespace Library.Controllers
 {

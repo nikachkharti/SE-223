@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Library.Models;
+using Library.Entities;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

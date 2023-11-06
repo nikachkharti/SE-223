@@ -1,5 +1,6 @@
 ﻿using Library.Configuration;
 using Library.Data;
+using Library.Service.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
