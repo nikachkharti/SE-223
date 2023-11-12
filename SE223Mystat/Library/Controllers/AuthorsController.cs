@@ -1,4 +1,5 @@
-﻿using Library.Entities;
+﻿using AutoMapper.Configuration;
+using Library.Entities;
 using Library.Service.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,9 +10,12 @@ namespace Library.Controllers
     public class AuthorsController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        public AuthorsController(IUnitOfWork unitOfWork)
+        private readonly IWebHostEnvironment _environment;
+
+        public AuthorsController(IUnitOfWork unitOfWork, IWebHostEnvironment environment)
         {
             _unitOfWork = unitOfWork;
+            _environment = environment;
         }
 
         public async Task<IActionResult> Index()
@@ -75,12 +79,33 @@ namespace Library.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Create(Author model)
+        public async Task<IActionResult> Create(Author model, IFormFile? file)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
+                    var wwwroot = _environment.WebRootPath;
+
+                    if (file != null)
+                    {
+                        string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                        string filePath = Path.Combine(wwwroot, @"img\");
+                        string directoryPath = Path.GetDirectoryName(Path.Combine(filePath, fileName));
+
+                        if (!Directory.Exists(directoryPath))
+                        {
+                            Directory.CreateDirectory(directoryPath);
+                        }
+
+                        using (FileStream fileStream = new(Path.Combine(filePath, fileName), FileMode.Create))
+                        {
+                            await file.CopyToAsync(fileStream);
+                        }
+
+                        model.ImageUrl = fileName;
+                    }
+
                     await _unitOfWork.AuthorService.Add(model);
                     await _unitOfWork.Save();
                 }

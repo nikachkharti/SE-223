@@ -14,5 +14,7 @@ namespace Library.Entities
         public string? LastName { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public DateTime? DateOfDeath { get; set; }
+
+        public string? ImageUrl { get; set; }
     }
 }
