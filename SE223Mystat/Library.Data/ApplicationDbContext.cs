@@ -22,12 +22,14 @@ namespace Library.Data
         {
             base.OnModelCreating(modelBuilder);
 
+
             modelBuilder.Entity<Author>().HasData(
                     new Author
                     {
                         Id = 1,
                         FirstName = "ილია",
                         LastName = "ჭავჭავაძე",
+                        ImageUrl = null,
                         DateOfBirth = new DateTime(1792, 2, 21),
                         DateOfDeath = new DateTime(1902, 10, 22)
                     },
@@ -36,6 +38,7 @@ namespace Library.Data
                         Id = 2,
                         FirstName = "ვაჟა",
                         LastName = "ფშაველა",
+                        ImageUrl = null,
                         DateOfBirth = new DateTime(1812, 2, 21),
                         DateOfDeath = new DateTime(1917, 10, 22)
                     },
@@ -44,6 +47,7 @@ namespace Library.Data
                         Id = 3,
                         FirstName = "შოთა",
                         LastName = "რუსთაველი",
+                        ImageUrl = null,
                         DateOfBirth = null,
                         DateOfDeath = null
                     }
@@ -148,6 +152,7 @@ namespace Library.Data
                         NormalizedName = "CUSTOMER"
                     }
                 );
+
         }
     }
 }
