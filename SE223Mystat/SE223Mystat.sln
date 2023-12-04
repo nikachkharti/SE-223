@@ -17,17 +17,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OLD", "OLD", "{B75C4C67-0AB
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library", "Library\Library.csproj", "{A8017F3B-A3FE-478B-8EC0-3225FF14DF89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Entities", "Library.Entities\Library.Entities.csproj", "{291BFAD7-F4F5-4C2F-AABF-461DACE63B49}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Entities", "Library.Entities\Library.Entities.csproj", "{291BFAD7-F4F5-4C2F-AABF-461DACE63B49}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Repository", "Library.Repository\Library.Repository.csproj", "{8A4A5FB9-4B46-4397-A96A-45CA2BF51EF7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Repository", "Library.Repository\Library.Repository.csproj", "{8A4A5FB9-4B46-4397-A96A-45CA2BF51EF7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Service", "Library.Service\Library.Service.csproj", "{1AC1559D-66D8-4C79-96F0-545CB16AAE17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Service", "Library.Service\Library.Service.csproj", "{1AC1559D-66D8-4C79-96F0-545CB16AAE17}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Helper", "Library.Helper\Library.Helper.csproj", "{F8A6D1D8-0F6B-4D1C-8F5C-760D857E6448}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Helper", "Library.Helper\Library.Helper.csproj", "{F8A6D1D8-0F6B-4D1C-8F5C-760D857E6448}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Data", "Library.Data\Library.Data.csproj", "{1E675301-D607-4BC5-BB18-EC0D51715AC1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Data", "Library.Data\Library.Data.csproj", "{1E675301-D607-4BC5-BB18-EC0D51715AC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Models", "Library.Models\Library.Models.csproj", "{C3E61CF4-4307-48A1-9C8F-521F5E60F161}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Models", "Library.Models\Library.Models.csproj", "{C3E61CF4-4307-48A1-9C8F-521F5E60F161}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notes.API", "Notes.API\Notes.API.csproj", "{CD434F99-64C3-4A49-8F95-8010F9801639}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,6 +85,10 @@ Global
 		{C3E61CF4-4307-48A1-9C8F-521F5E60F161}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3E61CF4-4307-48A1-9C8F-521F5E60F161}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3E61CF4-4307-48A1-9C8F-521F5E60F161}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD434F99-64C3-4A49-8F95-8010F9801639}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD434F99-64C3-4A49-8F95-8010F9801639}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD434F99-64C3-4A49-8F95-8010F9801639}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD434F99-64C3-4A49-8F95-8010F9801639}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
